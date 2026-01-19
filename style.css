@@ -1,0 +1,116 @@
+/* --- Variabel & Reset --- */
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --secondary: #0f172a;
+    --danger: #ef4444;
+    --bg-light: #f8fafc;
+    --card-bg: #ffffff;
+    --text-dark: #334155;
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+
+* { box-sizing: border-box; transition: all 0.2s ease; }
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg-light); color: var(--text-dark); margin: 0; padding: 20px;
+}
+
+.container { max-width: 1250px; margin: 0 auto; } /* Lebarkan sedikit container */
+.header-title { text-align: center; color: var(--secondary); margin-bottom: 2rem; }
+.header-title i { color: var(--primary); margin-right: 10px; }
+
+.main-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+@media (min-width: 1024px) {
+    .main-grid { grid-template-columns: 3fr 1fr; align-items: start; }
+    .sticky-sidebar { position: sticky; top: 20px; } 
+}
+
+/* --- Card --- */
+.card { background: var(--card-bg); padding: 1.5rem; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid #e2e8f0; }
+h3 { margin-top: 0; color: var(--secondary); border-bottom: 2px solid var(--bg-light); padding-bottom: 10px; display: flex; align-items: center; gap: 10px; font-size: 1.2rem; }
+
+/* --- Input Biasa --- */
+.input-group { position: relative; display: flex; align-items: center; width: 100%; }
+.input-group i { position: absolute; left: 12px; color: #94a3b8; z-index: 10; }
+.input-group input {
+    width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;
+    font-size: 0.9rem; outline: none; background: #fff;
+}
+.input-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+.config-section .input-group input, .right-panel .input-group input { padding-left: 35px; }
+
+/* --- NEW: Combined Input (Angka + Dropdown) --- */
+.combined-input {
+    display: flex;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    overflow: hidden;
+    background: white;
+}
+.combined-input:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+.combined-input input {
+    border: none;
+    padding: 10px;
+    width: 60%; /* Bagian angka lebih lebar */
+    outline: none;
+}
+.combined-input select {
+    border: none;
+    border-left: 1px solid #e2e8f0;
+    background: #f1f5f9;
+    width: 40%; /* Bagian dropdown lebih kecil */
+    padding: 0 5px;
+    outline: none;
+    font-size: 0.85rem;
+    color: #334155;
+    cursor: pointer;
+}
+.combined-input select:hover { background: #e2e8f0; }
+
+.input-readonly { background-color: #f1f5f9 !important; border-color: #e2e8f0 !important; color: #64748b; font-weight: bold; text-align: right; pointer-events: none; }
+
+/* --- Grid Layout Bahan --- */
+.ingredient-list-header {
+    display: grid; 
+    /* Nama(2.5) - Harga(2) - Beli(2.5) - Pakai(2.5) - Hasil(2) - Del */
+    grid-template-columns: 2.5fr 2fr 2.5fr 2.5fr 2fr 40px; 
+    gap: 10px;
+    font-weight: 600; font-size: 0.8rem; color: #64748b; margin-bottom: 8px; padding: 0 5px;
+}
+.ingredient-row {
+    display: grid; 
+    grid-template-columns: 2.5fr 2fr 2.5fr 2.5fr 2fr auto; 
+    gap: 10px; margin-bottom: 10px; animation: slideIn 0.3s;
+}
+.ingredient-row.removing { animation: slideOut 0.3s forwards; pointer-events: none; }
+
+@keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideOut { to { opacity: 0; transform: translateX(50px); } }
+
+/* Mobile View */
+@media (max-width: 768px) {
+    .ingredient-list-header { display: none; }
+    .ingredient-row { display: flex; flex-direction: column; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .ingredient-row > div { margin-bottom: 8px; }
+    .btn-del { width: 100%; margin-top: 5px; background: #fee2e2; }
+}
+
+/* --- Buttons & Results (Sama) --- */
+button { cursor: pointer; border: none; border-radius: 6px; font-weight: 600; }
+.btn-add { background: var(--primary); color: white; width: 100%; padding: 12px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-add:hover { background: var(--primary-dark); }
+.btn-del { background: #fee2e2; color: var(--danger); width: 100%; height: 38px; display: flex; align-items: center; justify-content: center; }
+.btn-del:hover { background: var(--danger); color: white; }
+
+.results-card { background: var(--secondary); color: white; }
+.config-section { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+.config-section label, .results-card label { font-size: 0.8rem; color: #94a3b8; margin-bottom: 4px; display: block; }
+.config-section input, .results-card input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; }
+.result-row { display: flex; justify-content: space-between; align-items: center; margin: 12px 0; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 8px; }
+.price-tag { font-weight: 700; font-size: 1.1rem; }
+.final-price-box { background: var(--primary); padding: 20px; border-radius: 12px; text-align: center; margin-top: 25px; }
+.final-price-box strong { font-size: 2rem; display: block; line-height: 1.1; }
