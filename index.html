@@ -31,13 +31,11 @@
                         <div class="input-group">
                             <input type="text" placeholder="Nama Bahan" class="input-name">
                         </div>
-                        
                         <div class="input-group">
                             <input type="number" placeholder="Rp" class="input-buy-price" oninput="hitungOtomatis()">
                         </div>
-
                         <div class="combined-input">
-                            <input type="number" placeholder="0" class="input-buy-qty" oninput="hitungOtomatis()">
+                            <input type="number" step="any" placeholder="0" class="input-buy-qty" oninput="hitungOtomatis()">
                             <select class="select-buy-unit" onchange="hitungOtomatis()">
                                 <option value="1000">Kg</option>
                                 <option value="1">Gram</option>
@@ -46,9 +44,8 @@
                                 <option value="1">Pcs</option>
                             </select>
                         </div>
-
                         <div class="combined-input">
-                            <input type="number" placeholder="0" class="input-use-qty" oninput="hitungOtomatis()">
+                            <input type="number" step="any" placeholder="0" class="input-use-qty" oninput="hitungOtomatis()">
                             <select class="select-use-unit" onchange="hitungOtomatis()">
                                 <option value="1">Gram</option>
                                 <option value="1000">Kg</option>
@@ -57,11 +54,9 @@
                                 <option value="1">Pcs</option>
                             </select>
                         </div>
-
                         <div class="input-group">
                             <input type="text" value="Rp 0" class="input-row-total input-readonly" readonly tabindex="-1">
                         </div>
-                        
                         <button type="button" class="btn-del" onclick="hapusBarisAnimated(this)"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
