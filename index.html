@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator HPP Pro V3 (Auto Convert)</title>
+    <title>Kalkulator HPP Pro - Edisi Waras</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -20,22 +20,18 @@
                 <div class="ingredient-list-header">
                     <span>Bahan</span>
                     <span>Harga Beli</span>
-                    <span>Qty Beli + Satuan</span>
-                    <span>Qty Pakai + Satuan</span>
+                    <span>Qty Beli</span>
+                    <span>Qty Pakai</span>
                     <span>Biaya (Auto)</span>
                     <span></span>
                 </div>
 
                 <div id="ingredients-container">
                     <div class="ingredient-row item">
-                        <div class="input-group">
-                            <input type="text" placeholder="Nama Bahan" class="input-name">
-                        </div>
-                        <div class="input-group">
-                            <input type="number" placeholder="Rp" class="input-buy-price" oninput="hitungOtomatis()">
-                        </div>
+                        <div class="input-group"><input type="text" placeholder="Nama Bahan" class="input-name"></div>
+                        <div class="input-group"><input type="number" placeholder="Rp" class="input-buy-price" oninput="hitungOtomatis()"></div>
                         <div class="combined-input">
-                            <input type="number" step="any" placeholder="0" class="input-buy-qty" oninput="hitungOtomatis()">
+                            <input type="number" step="any" class="input-buy-qty" oninput="hitungOtomatis()">
                             <select class="select-buy-unit" onchange="hitungOtomatis()">
                                 <option value="1000">Kg</option>
                                 <option value="1">Gram</option>
@@ -45,7 +41,7 @@
                             </select>
                         </div>
                         <div class="combined-input">
-                            <input type="number" step="any" placeholder="0" class="input-use-qty" oninput="hitungOtomatis()">
+                            <input type="number" step="any" class="input-use-qty" oninput="hitungOtomatis()">
                             <select class="select-use-unit" onchange="hitungOtomatis()">
                                 <option value="1">Gram</option>
                                 <option value="1000">Kg</option>
@@ -55,13 +51,13 @@
                             </select>
                         </div>
                         <div class="input-group">
-                            <input type="text" value="Rp 0" class="input-row-total input-readonly" readonly tabindex="-1">
+                            <input type="text" value="Rp 0" class="input-row-total input-readonly" readonly>
                         </div>
-                        <button type="button" class="btn-del" onclick="hapusBarisAnimated(this)"><i class="fas fa-times"></i></button>
+                        <button type="button" class="btn-del" onclick="hapusBaris(this)"><i class="fas fa-times"></i></button>
                     </div>
                 </div>
 
-                <button type="button" class="btn-add" onclick="tambahBarisAnimated()">
+                <button type="button" class="btn-add" onclick="tambahBaris()">
                     <i class="fas fa-plus-circle"></i> Tambah Bahan
                 </button>
             </div>
@@ -76,39 +72,39 @@
                         <label>Overhead (Gas/Listrik)</label>
                         <div class="input-group">
                             <i class="fas fa-bolt"></i>
-                            <input type="number" id="overhead" placeholder="0" value="0" oninput="hitungOtomatis()">
+                            <input type="number" id="overhead" value="0" oninput="hitungOtomatis()">
                         </div>
                     </div>
+                    <div>
+                        <label>Tenaga Kerja (Opsional)</label>
+                        <div class="input-group">
+                            <i class="fas fa-user-cog"></i>
+                            <input type="number" id="labor" value="0" placeholder="Gaji/hari" oninput="hitungOtomatis()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="config-section">
                     <div>
                         <label>Margin Profit (%)</label>
                         <div class="input-group">
                             <i class="fas fa-percentage"></i>
-                            <input type="number" id="margin" placeholder="30" value="30" oninput="hitungOtomatis()">
+                            <input type="number" id="margin" value="50" oninput="hitungOtomatis()">
+                        </div>
+                    </div>
+                    <div>
+                        <label>Porsi Dihasilkan</label>
+                        <div class="input-group">
+                            <i class="fas fa-utensils"></i>
+                            <input type="number" id="porsi" value="1" oninput="hitungOtomatis()">
                         </div>
                     </div>
                 </div>
-                <div style="margin-bottom: 20px;">
-                    <label>Jumlah Porsi Dihasilkan</label>
-                    <div class="input-group" style="margin-bottom: 0;">
-                        <i class="fas fa-utensils"></i>
-                        <input type="number" id="porsi" placeholder="1" value="1" oninput="hitungOtomatis()">
-                    </div>
-                </div>
 
-                <hr style="border-color: rgba(255,255,255,0.1); margin: 25px 0;">
+                <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
 
-                <div class="result-row">
-                    <span>Total HPP (Modal):</span>
-                    <span id="total-hpp" class="price-tag">Rp 0</span>
-                </div>
-                <div class="result-row">
-                    <span>HPP Per Porsi:</span>
-                    <span id="hpp-porsi" class="price-tag">Rp 0</span>
-                </div>
-                <div class="result-row">
-                    <span>Cuan Per Porsi:</span>
-                    <span id="profit-value" class="price-tag" style="color: #4ade80;">Rp 0</span>
-                </div>
+                <div class="result-row"><span>HPP (Modal) / Porsi:</span> <span id="hpp-porsi" class="price-tag">Rp 0</span></div>
+                <div class="result-row"><span>Cuan / Porsi:</span> <span id="profit-value" class="price-tag" style="color: #4ade80;">Rp 0</span></div>
 
                 <div class="final-price-box">
                     <small>REKOMENDASI HARGA JUAL:</small>
@@ -118,7 +114,6 @@
         </div>
     </div>
 </div>
-
 <script src="script.js"></script>
 </body>
 </html>
